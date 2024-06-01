@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 import React from "react";
 
 async function UsersList() {
-    const users = await prisma.user.findMany();
+  const users = await prisma.user.findMany();
   return (
     <div>
       {users.map((user) => (

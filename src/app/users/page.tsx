@@ -1,5 +1,4 @@
-import UsersList from "@/components/modules/users/users";
-
+import UsersList from "@/components/modules/userlist/Users";
 import React, { Suspense } from "react";
 
 async function Users() {
