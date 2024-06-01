@@ -1,6 +1,26 @@
 import Image from "next/image";
-
+import prisma from "../../lib/prisma";
+import toast from "react-hot-toast";
 export default function Home() {
+  const signInUser = async (formData: FormData) => {
+    "use server";
+    const { username, fullname, email, password } =
+      Object.fromEntries<any>(formData);
+
+    const user = await prisma.user.create({
+      data: {
+        email: email,
+        fullname: fullname,
+        password: password,
+        username: username,
+        role: "USER",
+      },
+    });
+
+    if (user) {
+      toast.success("user created successfully:)");
+    }
+  };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -108,6 +128,18 @@ export default function Home() {
           </p>
         </a>
       </div>
+
+      <form action={signInUser}>
+        <input type="text" name="fullname" placeholder="enter your name" />
+        <input type="text" name="username" placeholder="enter your username" />
+        <input
+          type="password"
+          name="password"
+          placeholder="enter your password"
+        />
+        <input type="email" name="email" placeholder="enter your email" />
+        <button type="submit">Submit</button>
+      </form>
     </main>
   );
 }
